@@ -2,6 +2,7 @@ import { DefaultField } from "../fields/defaultField";
 import { api } from "../../../api/axiosApi";
 import { useEffect, useState } from "react";
 import "./style.css";
+import { ArrayField } from "../fields/arrayField";
 
 export const GeneralForm = ({ method, instance, initialState }) => {
   const [element, setElement] = useState(initialState);
@@ -12,7 +13,7 @@ export const GeneralForm = ({ method, instance, initialState }) => {
 
   //Funcion para importar la informacion del formulario
   const importFormData = async () => {
-    
+
     const result = await import("../form/forms");
 
     setInfo(result[nameImport]);
@@ -40,6 +41,11 @@ export const GeneralForm = ({ method, instance, initialState }) => {
           type={type}
         />
       );
+    } 
+    else if (e.type === 'array') {
+      return (
+        <ArrayField display={display_name} field={field_name} state={element} stateFn={setElement} keys={e.keys} />
+      )
     }
   };
 
@@ -58,9 +64,9 @@ export const GeneralForm = ({ method, instance, initialState }) => {
       url: method === "POST" ? `${path}/` : `${path}/${element[pkInstance]}/`,
     };
 
-    const result = await api.request(config);
+    // const result = await api.request(config);
 
-    console.log(result);
+    console.log('aca se ejecuta');
   };
 
   const formTitle =

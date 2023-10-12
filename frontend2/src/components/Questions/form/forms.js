@@ -11,11 +11,18 @@ export const moduleForm = {
             display_name: 'Descripcion del modulo',
             field_name: 'module_description',
             type: 'text'
+        },
+        {
+            display_name: 'Lista',
+            field_name: 'lista',
+            type: 'array',
+            keys: ['titulo', 'nombre']
         }
     ],
     initialState: {
         module_title: '',
-        module_description: ''
+        module_description: '',
+        lista: []
     }
 }
 

@@ -6,7 +6,7 @@ export const IndexPage = () => {
 
   return (
     <div>
-      
+      <FormModule />
     </div>
   )
 }
