@@ -1,12 +1,11 @@
-import { FormModule } from "../components/Module/module_form"
+import { ModuleTable } from "../components/Module/module_table"
 
 export const IndexPage = () => {
 
-  const objects = ['module', 'window', 'component', '']
-
   return (
     <div>
-      <FormModule />
+      {/* <FormModule /> */}
+      <ModuleTable />
     </div>
   )
 }

@@ -1,31 +1,9 @@
 import { DefaultField } from "../fields/defaultField";
-import { api } from "../../../api/axiosApi";
-import { useEffect, useState } from "react";
-import "./style.css";
 import { ArrayField } from "../fields/arrayField";
+import { OptionField } from "../fields/optionField";
+import "./style.css";
 
-export const GeneralForm = ({ method, instance, initialState }) => {
-  const [element, setElement] = useState(initialState);
-  const [info, setInfo] = useState({});
-  const [importState, setImportState] = useState(false);
-
-  const nameImport = `${instance}Form`;
-
-  //Funcion para importar la informacion del formulario
-  const importFormData = async () => {
-
-    const result = await import("../form/forms");
-
-    setInfo(result[nameImport]);
-    !initialState && setElement(result[nameImport].initialState);
-
-    setImportState(true);
-  };
-
-  //Montamos la informacion del formulario
-  useEffect(() => {
-    importFormData();
-  }, [nameImport]);
+export const GeneralForm = ({ state, stateFn, info }) => {
 
   //Para cada pregunta
   const handleQuestions = (e) => {
@@ -36,53 +14,36 @@ export const GeneralForm = ({ method, instance, initialState }) => {
         <DefaultField
           display={display_name}
           field={field_name}
-          state={element}
-          stateFn={setElement}
+          state={state}
+          stateFn={stateFn}
           type={type}
         />
       );
-    } 
-    else if (e.type === 'array') {
+    } else if (e.type === "array") {
       return (
-        <ArrayField display={display_name} field={field_name} state={element} stateFn={setElement} keys={e.keys} />
+        <ArrayField
+          display={display_name}
+          field={field_name}
+          state={state}
+          stateFn={stateFn}
+          items={e.items}
+        />
+      );
+    } else if (e.type === 'options') {
+      return (
+        <OptionField display={display_name}
+        field={field_name}
+        state={state}
+        stateFn={stateFn}
+        options={e.options}
+        />
       )
     }
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-
-    const { path } = info;
-
-    const pkInstance = Object.keys(element)
-      .map((e) => (e.includes("pk_id_") ? e : false))
-      .filter((e) => e)[0];
-
-    const config = {
-      method,
-      data: element,
-      url: method === "POST" ? `${path}/` : `${path}/${element[pkInstance]}/`,
-    };
-
-    // const result = await api.request(config);
-
-    console.log('aca se ejecuta');
-  };
-
-  const formTitle =
-    method === "POST"
-      ? `Registrar ${info?.display_name}`
-      : `Actualizar ${info?.display_name}`;
-
   return (
-    <form onSubmit={(e) => handleSave(e)}>
-      {importState && (
-        <>
-          <h1>{formTitle}</h1>
+        <div>
           {info?.questions.map((e) => handleQuestions(e))}
-          <button type="submit">Guardar</button>
-        </>
-      )}
-    </form>
+        </div>
   );
 };

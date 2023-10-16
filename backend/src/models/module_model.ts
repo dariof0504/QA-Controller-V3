@@ -57,6 +57,7 @@ export const component_module_element = sqlDB.define('tb_component_module', {
     component_location: {
         type: DataTypes.STRING
     },
+    //Falta cambiar aca
     comoponent_properties: {
         type: DataTypes.JSON
     }

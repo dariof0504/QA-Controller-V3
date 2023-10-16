@@ -9,7 +9,7 @@ const main = async () => {
     try {
 
         await sqlDB.authenticate()
-        await sqlDB.sync({force: true})
+        await sqlDB.sync({force: false})
         
         
         const data = await module_element.findAll()
