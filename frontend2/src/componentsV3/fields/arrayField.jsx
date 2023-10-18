@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { InstancesRouter } from "../../../componentsV2/fields/InstanceRouter";
+import { InstancesRouter } from "./InstanceRouter";
 
-export const ArrayFieldV2 = ({ state, stateFn, field, display, instances }) => {
+export const ArrayField = ({
+  state,
+  stateFn,
+  field,
+  display_name,
+  instances,
+}) => {
   const template = {};
   const listItems = state[field] ? state[field] : [];
 
   instances.forEach((instance) => {
-    template[instance.field_name] = "";
+    template[instance.field_name] = instance.type === "bool" ? false : "";
   });
 
   const [arrayElement, setArrayElement] = useState(template);
 
-  const handleAdd = (e) => {
-    e.preventDefault();
-
+  const handleAdd = () => {
     const result = {
       ...state,
       [field]: [...listItems, { ...arrayElement, id: uuid() }],
@@ -30,20 +34,24 @@ export const ArrayFieldV2 = ({ state, stateFn, field, display, instances }) => {
   };
 
   const instanceValues = (item, instance) => {
-    const display_name = instance.display_name;
-    const field_name = instance.field_name;
+    const field = instance.field_name
+    const type = typeof item[field];
 
     return (
       <>
-        <p>{display_name}</p>
-        <p>{item[field_name]}</p>
+        {type !== typeof {} | type !== typeof [] && (
+          <>
+            <p>{instance.display_name}</p>
+            <p>{JSON.stringify(item[field])}</p>
+          </>
+        )}
       </>
     );
   };
 
   return (
     <div>
-      <p>{display}</p>
+      <p>{display_name}</p>
       {instances.map((instance) => (
         <InstancesRouter
           instance={instance}
@@ -51,7 +59,7 @@ export const ArrayFieldV2 = ({ state, stateFn, field, display, instances }) => {
           stateFn={setArrayElement}
         />
       ))}
-      <button onClick={(e) => handleAdd(e)}>Añadir</button>
+      <button onClick={() => handleAdd()}>Añadir</button>
       <div>
         {listItems.map((item) => (
           <div>

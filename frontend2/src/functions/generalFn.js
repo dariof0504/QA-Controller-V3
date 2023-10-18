@@ -20,3 +20,14 @@ export const filterObject = (template, element) => {
     return filteredElement
 
 }
+
+export const getFields = (element) => {
+    const fields = element.questions.map(e => e.field_name)
+    return fields
+}
+
+export const getDisplayNames = (element) => {
+    const display_names = element.questions.map(e=>e.display_name)
+
+    return display_names
+}

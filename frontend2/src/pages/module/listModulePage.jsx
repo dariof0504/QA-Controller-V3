@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
+import { moduleForm } from "../../components/Questions/form/forms";
 import { listElements } from "../../api/axiosApi";
-import { moduleForm } from "../Questions/form/forms";
-
-import { TableComponent } from "../tables/table_component";
+import { TableComponent } from "../../components/tables/table_component";
 import { Link } from "react-router-dom";
 import { getPk } from "../../functions/generalFn";
 
-export const ModuleTable = () => {
+export const ListModulePage = () => {
 
-  const [data, setdata] = useState([]);
+	const [data, setdata] = useState([]);
 
   const columns = moduleForm.questions.map((e) => e.display_name).slice(0,2)
   const columnsFields = moduleForm.questions.map((e) => e.field_name).slice(0,2);
@@ -36,7 +35,13 @@ export const ModuleTable = () => {
     return <Link to={`/module/window/${pk}`}>Crear ventana</Link>
   }
 
-  const butons = [verBoton, createWindow];
+	const listWindows = (element) => {
+		const pk = getPk(element)
+
+		return <Link to={`/listWindow/${pk}`}>Ver ventanas</Link>
+	}
+
+  const butons = [verBoton, createWindow, listWindows];
 
   return (
     <TableComponent
@@ -46,4 +51,4 @@ export const ModuleTable = () => {
       buttons={butons}
     />
   );
-};
+}

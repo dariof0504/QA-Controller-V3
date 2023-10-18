@@ -39,7 +39,27 @@ export const listElements = async (path) => {
 
 }
 
-export const listFKElements = async () => {
+export const listElementByField = async (path, field, payload) => {
+    const config = {
+        method: 'GET',
+        url: `byField/${path}/${field}/${payload}/`
+    }
+
+    const result = await api.request(config)
+
+    return result
+
+}
+
+export const elementsByFK = async (path, fk_path, fk) => {
+    const config = {
+        method: 'GET',
+        url: `byFK/${path}/${fk_path}/${fk}/`
+    }
+
+    const result = await api.request(config)
+
+    return result
 
 }
 
