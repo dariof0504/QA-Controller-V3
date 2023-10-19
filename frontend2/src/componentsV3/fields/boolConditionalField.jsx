@@ -11,10 +11,18 @@ export const BoolConditionalField = ({
   condition,
   instances,
 }) => {
-  const [element, setElement] = useState('');
+
+  const template = {}
+  instances.forEach((instance) => {
+    template[instance] = ''
+  })
+
+  const initialState = state[field] ? state[field] : template
+
+  const [element, setElement] = useState(initialState);
 
   useEffect(() => {
-    // console.log(field)
+
     const result = { ...state, [field]: element };
     
     stateFn(result);
@@ -22,7 +30,6 @@ export const BoolConditionalField = ({
 
   return (
     <div>
-      <p>{display_name}</p>
       {state[field_depends] === condition &&
         instances.map((instance) => (
           <InstancesRouter

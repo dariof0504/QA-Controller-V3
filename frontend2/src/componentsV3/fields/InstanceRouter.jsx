@@ -2,6 +2,7 @@ import { TextField } from './textField'
 import { BoolField } from './booleanField'
 import { BoolConditionalField } from './boolConditionalField'
 import { ArrayField } from './arrayField'
+import { OptionField } from './optionField'
 
 export const InstancesRouter = ({ state, stateFn, instance }) => {
   const { field_name, type, display_name } = instance;
@@ -47,5 +48,15 @@ export const InstancesRouter = ({ state, stateFn, instance }) => {
         instances={instance.instances}
       />
     );
+  } else if (type === 'options') {
+    return (
+      <OptionField 
+        state={state}
+        stateFn={stateFn}
+        field={field_name}
+        display={display_name}
+        options={instance.options}
+      />
+    )
   }
 };

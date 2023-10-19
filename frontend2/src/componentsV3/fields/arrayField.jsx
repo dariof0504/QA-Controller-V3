@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { InstancesRouter } from "./InstanceRouter";
 
@@ -35,11 +35,11 @@ export const ArrayField = ({
 
   const instanceValues = (item, instance) => {
     const field = instance.field_name
-    const type = typeof item[field];
-
+    const type = typeof item[field] === 'string' ? true : false;
+    
     return (
       <>
-        {type !== typeof {} | type !== typeof [] && (
+        {type && (
           <>
             <p>{instance.display_name}</p>
             <p>{JSON.stringify(item[field])}</p>
