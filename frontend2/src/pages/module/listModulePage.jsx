@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { moduleForm } from "../../components/Questions/form/forms";
 import { listElements } from "../../api/axiosApi";
 import { TableComponent } from "../../components/tables/table_component";
 import { Link } from "react-router-dom";
 import { getPk } from "../../functions/generalFn";
+import { module_info } from "../../data/schemaInfo";
 
 export const ListModulePage = () => {
+  const [data, setdata] = useState([]);
 
-	const [data, setdata] = useState([]);
-
-  const columns = moduleForm.questions.map((e) => e.display_name).slice(0,2)
-  const columnsFields = moduleForm.questions.map((e) => e.field_name).slice(0,2);
+  const columns = module_info.instances.map((e) => e.display_name).slice(0, 2);
+  const columnsFields = module_info.instances
+    .map((e) => e.field_name)
+    .slice(0, 2);
 
   const getInfo = async () => {
     const result = await listElements("module");
@@ -21,25 +22,25 @@ export const ListModulePage = () => {
     getInfo();
   }, []);
 
+  
   const verBoton = (element) => {
-    
-    const pk = getPk(element)
+    const pk = getPk(element);
 
-    return <Link to={`/module/${pk}`} >Editar</Link>;
+    return <Link to={`/edit/module/${pk}`}>Editar</Link>;
   };
 
   const createWindow = (element) => {
 
     const pk = getPk(element)
 
-    return <Link to={`/module/window/${pk}`}>Crear ventana</Link>
+    return <Link to={`/create/window/${pk}`}>Crear ventana</Link>
   }
 
-	const listWindows = (element) => {
-		const pk = getPk(element)
+  const listWindows = (element) => {
+  	const pk = getPk(element)
 
-		return <Link to={`/listWindow/${pk}`}>Ver ventanas</Link>
-	}
+  	return <Link to={`/list/window/${pk}`}>Ver ventanas</Link>
+  }
 
   const butons = [verBoton, createWindow, listWindows];
 
@@ -51,4 +52,4 @@ export const ListModulePage = () => {
       buttons={butons}
     />
   );
-}
+};

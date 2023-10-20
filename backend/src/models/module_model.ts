@@ -57,8 +57,13 @@ export const component_module_element = sqlDB.define('tb_component_module', {
     component_location: {
         type: DataTypes.STRING
     },
-    //Falta cambiar aca
-    comoponent_properties: {
+    component_action: {
+        type: DataTypes.STRING
+    },
+    component_click_props: {
+        type: DataTypes.JSON
+    },
+    component_type_props: {
         type: DataTypes.JSON
     }
 })
@@ -118,10 +123,10 @@ export const incident_module_element = sqlDB.define('tb_incident_module', {
     incident_enviroment: {
         type: DataTypes.STRING
     },
-    incident_summay: {
+    incident_summary: {
         type: DataTypes.STRING
     },
-    incidentt_comments: {
+    incident_comments: {
         type: DataTypes.ARRAY(DataTypes.JSON)
     },
     incident_steps: {

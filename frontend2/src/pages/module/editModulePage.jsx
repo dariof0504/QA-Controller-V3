@@ -1,11 +1,17 @@
-import { EditElementForm } from '../../components/generalComponents/editElementForm'
-import { moduleForm } from '../../components/Questions/form/forms'
+import { module_info } from "../../data/schemaInfo"
+import { generalApi } from "../../api/axiosApi"
+import { EditModule } from "../../componentsV3/forms/editGeneralModule"
 
 export const EditModulePage = () => {
 
-  const info = moduleForm
+  const saveModule = async (element) => {
+    const result = await generalApi(module_info, element, 'PUT')
+    return result.data
+  }
 
   return (
-    <EditElementForm info={info} />
+    <div>
+      <EditModule apiFn={saveModule} info={module_info} />
+    </div>
   )
 }
